@@ -209,8 +209,8 @@ export default function TextAnimator() {
       <div
         className="absolute mix-blend-color-burn "
         style={{
-          left: "calc(50% - 83px)",
-          top: "52%",
+          left: blobFullscreen ? "53%" : "calc(50% - 90px)",
+          top: blobFullscreen ? "75%" : "52%",
           width: 80,
           height: 80,
           opacity: blobsVisible || blobFullscreen ? 1 : 0,
@@ -233,7 +233,7 @@ export default function TextAnimator() {
       <div
         className="absolute"
         style={{
-          left: "calc(50% - 45px)",
+          left: "calc(50% - 55px)",
           top: "52%",
           width: 80,
           height: 80,
