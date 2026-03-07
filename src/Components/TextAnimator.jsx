@@ -243,7 +243,7 @@ export default function TextAnimator() {
               ? "translate(30px, 50px) scale(1)"
               : "translate(30px, 50px) scale(0)",
           transition: "transform 0.6s ease 0.12s, opacity 0.6s ease 0.12s",
-          zIndex: 1,
+          zIndex: 5,
         }}
       >
         <svg viewBox="0 0 100 100" width="80" height="80">
@@ -278,17 +278,17 @@ export default function TextAnimator() {
       {/* ── SEARCH BAR + SLIDER WRAPPER ──
           Centered on the page. Hidden briefly during blob grow transition */}
       <div
-        className="absolute left-1/2 top-1/2 w-100 transition-opacity duration-300"
+        className="absolute left-1/2 top-1/2 w-[90vw] max-w-105w-[80vw] sm:max-w-115 lg:w-130 transition-opacity duration-300"
         style={{
           transform: "translate(-50%, -50%)",
           opacity: showSearchBar ? 1 : 0,
-          zIndex: 10,
-        }}
+          zIndex: 1,
+        }}  
       >
         {/* ── PILL SEARCH BAR ──
             Frosted glass pill shape. Shows the typewriter text inside */}
         <div
-          className="flex items-center justify-center rounded-full font-bold font-sans px-7 py-3 backdrop-blur-sm"
+          className="flex items-center justify-center rounded-full font-bold font-sans px-4 py-2 sm:px-6 sm:py-3 backdrop-blur-sm"
           style={{
             background: "rgba(255,255,255,0.82)",
             boxShadow: "0px 20px 16px rgba(0,0,0,0.20)",
@@ -296,8 +296,8 @@ export default function TextAnimator() {
           }}
         >
           <span
+            className="text-lg sm:text-xl lg:text-2xl"
             style={{
-              fontSize: "1.5rem",
               color: "#b83010",
               letterSpacing: " ",
             }}
@@ -320,7 +320,7 @@ export default function TextAnimator() {
             Rainbow gradient range input that auto-animates from pink to yellow-green.
             pointerEvents: none means the user cannot interact with it */}
         <div
-          className="mt-6 transition-all duration-500"
+          className="mt-4 sm:mt-6 transition-all duration-500"
           style={{
             opacity: sliderVisible ? 1 : 0,
             transform: sliderVisible ? "translateY(0)" : "translateY(8px)",
@@ -347,7 +347,7 @@ export default function TextAnimator() {
           Oval/ellipse shaped tray with emoji art tools inside.
           Each tool pops in with a staggered delay (transitionDelay) */}
       <div
-        className="absolute bottom-5 left-1/2 flex items-end justify-center gap-1 px-12 pt-5 pb-3"
+        className="absolute bottom-2 sm:bottom-5 left-1/2 flex items-end justify-center gap-1 px-5 sm:px-12 pt-3 sm:pt-5 pb-2 sm:pb-3"
         style={{
           transform: blobFullscreen
             ? `translateX(-50%) translateY(${animatePalette ? 40 : 0}px)` // slides up into view, moves down during palette animation
@@ -359,7 +359,7 @@ export default function TextAnimator() {
           backgroundSize: "contain",
           backgroundPosition: "center",
           borderRadius: "50% 50% 0 0 / 25% 25% 0 0", // oval top edge
-          width: 700,
+          width: "min(92vw, 700px)",
           zIndex: 10,
         }}
       >

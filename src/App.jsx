@@ -15,8 +15,10 @@ function App() {
           .app-bg { background-image: url(${webBg}); }
         }
       `}</style>
-      <div className="app-bg bg-fixed bg-no-repeat overflow-hidden bg-cover min-h-screen px-6 py-18 lg:px-24">
-        <NavBar />
+      <div className="app-bg relative bg-fixed bg-no-repeat overflow-hidden bg-cover min-h-screen px-6 py-18 lg:px-24">
+        <div className="relative z-50">
+          <NavBar />
+        </div>
         <TextAnimator />
       </div>
     </>
