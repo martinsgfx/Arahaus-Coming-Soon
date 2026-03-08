@@ -1,25 +1,45 @@
+import { useState } from "react";
 import { NavBar } from "./Components/NavBar";
 import mobileBg from "./assets/mobile-bg-1.png";
 import webBg from "./assets/web-bg-1.png";
+import waitMobileBg from "./assets/wait-mobile-bg.png";
+import waitBg from "./assets/wait-bg.png";
 import TextAnimator from "./Components/TextAnimator";
+import { Wait } from "./Components/Wait";
 
 function App() {
+  const [showWait, setShowWait] = useState(false);
+
   return (
     <>
       <style>{`
         html, body { margin: 0; padding: 0; overflow: hidden; }
         @media (max-width: 1023px) {
-          .app-bg { background-image: url(${mobileBg}); }
+          .base-bg { background-image: url(${mobileBg}); }
+          .wait-bg { background-image: url(${waitMobileBg}); }
         }
         @media (min-width: 1024px) {
-          .app-bg { background-image: url(${webBg}); }
+          .base-bg { background-image: url(${webBg}); }
+          .wait-bg { background-image: url(${waitBg}); }
         }
       `}</style>
-      <div className="app-bg relative bg-fixed bg-no-repeat overflow-hidden bg-cover min-h-screen px-6 py-18 lg:px-24">
-        <div className="relative z-50">
+      <div
+        className="relative overflow-hidden min-h-screen"
+      >
+        <div
+          className="base-bg absolute inset-0 bg-fixed bg-no-repeat bg-cover transition-opacity duration-700"
+          style={{ opacity: showWait ? 0 : 1 }}
+        />
+        <div
+          className="wait-bg absolute inset-0 bg-fixed bg-no-repeat bg-cover transition-opacity duration-700"
+          style={{ opacity: showWait ? 1 : 0 }}
+        />
+
+        <div className="relative z-50 px-6 py-18 lg:px-24">
           <NavBar />
         </div>
-        <TextAnimator />
+        {!showWait && <TextAnimator onComplete={() => setShowWait(true)} />}
+        {showWait && <Wait />}
       </div>
     </>
   );

@@ -7,6 +7,7 @@ import ruler from "../assets/ruler.png";
 import pencil from "../assets/pencil.png";
 import ink from "../assets/ink.png";
 import pencilsCup from "../assets/pencils-cup.png";
+import arrowCursor from "../assets/arrow-cursor.png";
 
 // ─────────────────────────────────────────────
 // CONSTANTS
@@ -20,6 +21,12 @@ const BLOB_PATH =
 const PHRASE1 = "Can you make it pop?";
 const PHRASE2 = "Maybe a softer color?";
 const PHRASE3 = "That's starting to look good!";
+const INITIAL_SLIDER_HUE = 300;
+const FINAL_SLIDER_HUE = 61;
+const SLIDER_SATURATION = 70;
+const SLIDER_LIGHTNESS = 75;
+const FADE_OUT_DELAY_MS = 1500;
+const FADE_OUT_DURATION_MS = 2000;
 
 // How fast each character is typed (in milliseconds)
 const TYPE_SPEED = 75;
@@ -57,7 +64,7 @@ function hslToHex(h, s, l) {
 // ─────────────────────────────────────────────
 // MAIN COMPONENT
 // ─────────────────────────────────────────────
-export default function TextAnimator() {
+export default function TextAnimator({ onComplete }) {
   // Tracks which stage of the animation we're in
   const [stage, setStage] = useState("typing1");
 
@@ -68,7 +75,9 @@ export default function TextAnimator() {
   const [blobsVisible, setBlobsVisible] = useState(false);
 
   // The current fill color of the main blob (starts pink, changes with slider)
-  const [blobColor, setBlobColor] = useState("#d8a0d8");
+  const [blobColor, setBlobColor] = useState(
+    hslToHex(INITIAL_SLIDER_HUE, SLIDER_SATURATION, SLIDER_LIGHTNESS)
+  );
 
   // Whether the blob has expanded to fill most of the screen
   const [blobFullscreen, setBlobFullscreen] = useState(false);
@@ -76,11 +85,14 @@ export default function TextAnimator() {
   // Whether the color slider is visible below the search bar
   const [sliderVisible, setSliderVisible] = useState(false);
 
-  // The current hue value of the slider (300 = pink/purple, 60 = yellow-green)
-  const [sliderHue, setSliderHue] = useState(300);
+  // The current hue value of the slider (300 = pink/purple, ~61 = yellow-green)
+  const [sliderHue, setSliderHue] = useState(INITIAL_SLIDER_HUE);
 
   // Animation trigger for palette during typing2 stage
   const [animatePalette, setAnimatePalette] = useState(false);
+
+  // Controls final full-scene fade out after all animation stages finish
+  const [isFadingOut, setIsFadingOut] = useState(false);
 
   // Which phrase to show based on the current stage
   const currentPhrase =
@@ -166,18 +178,18 @@ export default function TextAnimator() {
 
   // ─────────────────────────────────────────────
   // EFFECT: Auto-animate the color slider
-  // Moves the hue from 300 (pink) down to 60 (yellow-green)
+  // Moves the hue from the initial value down to the final value
   // Updates the blob color in real time as it moves
   // ─────────────────────────────────────────────
   useEffect(() => {
     if (stage !== "slider") return;
-    let hue = 300;
+    let hue = INITIAL_SLIDER_HUE;
     const interval = setInterval(() => {
       hue -= 3; // move slider left by 3 hue degrees each tick
-      if (hue < 60) {
-        hue = 60; // stop at yellow-green
+      if (hue < FINAL_SLIDER_HUE) {
+        hue = FINAL_SLIDER_HUE; // stop at target hue
         clearInterval(interval);
-        setBlobColor(hslToHex(hue, 70, 75));
+        setBlobColor(hslToHex(hue, SLIDER_SATURATION, SLIDER_LIGHTNESS));
         setSliderHue(hue);
         // Hide slider and start typing phrase 3
         setTimeout(() => {
@@ -188,20 +200,41 @@ export default function TextAnimator() {
         return;
       }
       // Update blob color and slider position each tick
-      setBlobColor(hslToHex(hue, 70, 75));
+      setBlobColor(hslToHex(hue, SLIDER_SATURATION, SLIDER_LIGHTNESS));
       setSliderHue(hue);
     }, 30); // runs every 30ms
     return () => clearInterval(interval);
   }, [stage]);
 
+  // Fade out the whole scene after the final stage completes
+  useEffect(() => {
+    if (stage !== "done") {
+      setIsFadingOut(false);
+      return;
+    }
+    const fadeTimer = setTimeout(() => {
+      setIsFadingOut(true);
+    }, FADE_OUT_DELAY_MS);
+
+    const completeTimer = setTimeout(() => {
+      onComplete?.();
+    }, FADE_OUT_DELAY_MS + FADE_OUT_DURATION_MS);
+
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(completeTimer);
+    };
+  }, [stage, onComplete]);
+
   // Hide the search bar only during the blob grow transition
   const showSearchBar = stage !== "blobGrow";
+  const sceneFadeOpacity = isFadingOut ? 0 : 1;
 
   // ─────────────────────────────────────────────
   // RENDER
   // ─────────────────────────────────────────────
   return (
-    <div className="">
+    <>
       {/* ── MAIN PINK BLOB ──
           Starts small below the search bar.
           When blobFullscreen = true, scales up to fill most of the screen.
@@ -213,18 +246,50 @@ export default function TextAnimator() {
           top: blobFullscreen ? "75%" : "52%",
           width: 80,
           height: 80,
-          opacity: blobsVisible || blobFullscreen ? 1 : 0,
+          opacity: (blobsVisible || blobFullscreen ? 1 : 0) * sceneFadeOpacity,
           transform: blobFullscreen
             ? "translate(-50%, -50%) scale(23)" // big — fills most of screen
             : "translate(-50%, 40px) scale(1)", // small — sits below search bar
           transition:
-            "transform 0.9s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease",
+            `transform 0.9s cubic-bezier(0.4,0,0.2,1), opacity ${isFadingOut ? FADE_OUT_DURATION_MS : 400}ms ease`,
           zIndex: 1,
         }}
       >
         <svg viewBox="0 0 100 100" width="90" height="90">
           <path d={BLOB_PATH} fill={blobColor} />
         </svg>
+      </div>
+
+      <div
+        style={{
+          opacity: sceneFadeOpacity,
+          transition: `opacity ${FADE_OUT_DURATION_MS}ms ease`,
+        }}
+      >
+
+      {/* Arrow points to the first small blob while all 3 options are visible */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          left: "calc(50% - 80px)",
+          top: "54%",
+          width: 38,
+          height: 38,
+          opacity: blobsVisible && !blobFullscreen ? 1 : 0,
+          transform:
+            blobsVisible && !blobFullscreen
+              ? "translate(-24px, 66px) scale(1)"
+              : "translate(-24px, 66px) scale(0)",
+          transition: "transform 0.5s ease 0.12s, opacity 0.5s ease 0.12s",
+          zIndex: 8,
+        }}
+      >
+        <img
+          src={arrowCursor}
+          alt=""
+          className="w-full h-full object-contain"
+          aria-hidden="true"
+        />
       </div>
 
       {/* ── RED BLOB ──
@@ -247,7 +312,7 @@ export default function TextAnimator() {
         }}
       >
         <svg viewBox="0 0 100 100" width="80" height="80">
-          <path d={BLOB_PATH} fill="#cc2200" />
+          <path d={BLOB_PATH} fill="#792808" />
         </svg>
       </div>
 
@@ -271,7 +336,7 @@ export default function TextAnimator() {
         }}
       >
         <svg viewBox="0 0 100 100" width="80" height="80">
-          <path d={BLOB_PATH} fill="#c8e000" />
+          <path d={BLOB_PATH} fill="#C3FB0B" />
         </svg>
       </div>
 
@@ -386,7 +451,7 @@ export default function TextAnimator() {
               transform: animatePalette
                 ? i === 3
                   ? "translateY(-80px) scale(1.4)"  // palette moves up and grows
-                  : "translateY(40px) scale(1)"     // others move down
+                  : "translateY(10px) scale(1)"     // others move down
                 : blobFullscreen
                   ? "translateY(0) scale(1)"
                   : "translateY(20px) scale(0.4)",
@@ -418,6 +483,7 @@ export default function TextAnimator() {
           cursor: pointer;
         }
       `}</style>
-    </div>
+      </div>
+    </>
   );
 }
