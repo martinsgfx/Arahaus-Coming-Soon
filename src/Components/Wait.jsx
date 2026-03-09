@@ -4,7 +4,7 @@ import lookDownIcon from "../assets/look-down.png";
 import lookDownAgainIcon from "../assets/look-down-again.png";
 
 const ICON_FRAMES = [lookDownIcon, lookUpIcon, lookDownAgainIcon];
-const FRAME_DURATION_MS = 450;
+const FRAME_DURATION_MS = 500;
 const WAIT_FADE_IN_MS = 500;
 const ICON_SEQUENCE = [1, 2, 0, 1, 2];
 const WAIT_COMPLETE_DELAY_MS = FRAME_DURATION_MS * ICON_SEQUENCE.length + 600;
