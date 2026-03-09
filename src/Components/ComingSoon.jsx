@@ -6,12 +6,12 @@ import bluePuzzleIcon from "../assets/puzzle-blue.png";
 const MOBILE_BREAKPOINT = 768;
 const DESIGN_WIDTH = 1920;
 const DESIGN_HEIGHT = 1080;
-const YELLOW_ICON_ANIMATION = "puzzleSpinPulse 3.4s ease-in-out infinite 0.12s";
-const RED_ICON_ANIMATION = "puzzleSpinPulse 3.4s ease-in-out infinite";
-const BLUE_ICON_ANIMATION = "puzzleSpinPulse 3.4s ease-in-out infinite 0.25s";
-const RED_STROKE_TO_SOLID_ANIMATION = "strokeToSolidRed 1.1s ease-in-out infinite alternate";
-const YELLOW_STROKE_TO_SOLID_ANIMATION = "strokeToSolidYellow 1.1s ease-in-out infinite alternate";
-const GREEN_STROKE_TO_SOLID_ANIMATION = "strokeToSolidGreen 1.1s ease-in-out infinite alternate";
+const YELLOW_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite 0.12s";
+const RED_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite";
+const BLUE_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite 0.25s";
+const RED_STROKE_TO_SOLID_ANIMATION = "strokeToSolidRed 3.1s ease-in-out infinite alternate";
+const YELLOW_STROKE_TO_SOLID_ANIMATION = "strokeToSolidYellow 3.1s ease-in-out infinite alternate";
+const GREEN_STROKE_TO_SOLID_ANIMATION = "strokeToSolidGreen 3.1s ease-in-out infinite alternate";
 
 export default function ComingSoon() {
   const [isMobile, setIsMobile] = useState(
@@ -19,8 +19,7 @@ export default function ComingSoon() {
   );
   const [desktopScale, setDesktopScale] = useState(1);
   const [growDesktopLine, setGrowDesktopLine] = useState(false);
-  const [growMobileLine, setGrowMobileLine] = useState(false);
-
+  const [growMobileLine, setGrowMobileLine] = useState(false);5
   useEffect(() => {
     const updateViewport = () => {
       const viewportW = window.visualViewport?.width ?? window.innerWidth;
