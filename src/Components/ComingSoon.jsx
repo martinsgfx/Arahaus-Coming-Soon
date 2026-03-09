@@ -6,6 +6,8 @@ import bluePuzzleIcon from "../assets/puzzle-blue.png";
 const MOBILE_BREAKPOINT = 768;
 const DESIGN_WIDTH = 1920;
 const DESIGN_HEIGHT = 1080;
+const MOBILE_DESIGN_WIDTH = 430;
+const MOBILE_DESIGN_HEIGHT = 932;
 const YELLOW_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite 0.12s";
 const RED_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite";
 const BLUE_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite 0.25s";
@@ -18,8 +20,10 @@ export default function ComingSoon() {
     (window.visualViewport?.width ?? window.innerWidth) < MOBILE_BREAKPOINT,
   );
   const [desktopScale, setDesktopScale] = useState(1);
+  const [mobileScale, setMobileScale] = useState(1);
   const [growDesktopLine, setGrowDesktopLine] = useState(false);
-  const [growMobileLine, setGrowMobileLine] = useState(false);5
+  const [growMobileLine, setGrowMobileLine] = useState(false);
+
   useEffect(() => {
     const updateViewport = () => {
       const viewportW = window.visualViewport?.width ?? window.innerWidth;
@@ -29,6 +33,10 @@ export default function ComingSoon() {
       const scaleX = viewportW / DESIGN_WIDTH;
       const scaleY = viewportH / DESIGN_HEIGHT;
       setDesktopScale(Math.min(scaleX, scaleY));
+
+      const mobileScaleX = viewportW / MOBILE_DESIGN_WIDTH;
+      const mobileScaleY = viewportH / MOBILE_DESIGN_HEIGHT;
+      setMobileScale(Math.min(mobileScaleX, mobileScaleY));
     };
 
     updateViewport();
@@ -59,7 +67,7 @@ export default function ComingSoon() {
 
   if (isMobile) {
     return (
-      <div className="absolute inset-0 px-6 pb-12  font-medium">
+      <div className="absolute inset-0 overflow-hidden font-medium">
         <style>{`
         @keyframes puzzleSpinPulse {
           0% { transform: rotate(0deg) scale(0.86); }
@@ -100,21 +108,30 @@ export default function ComingSoon() {
             }
           }
       `}</style>
-        <div className="relative mx-auto flex h-full w-full max-w-107.5 flex-col justify-center">
+        <div
+          className="absolute left-1/2 top-1/2"
+          style={{
+            width: MOBILE_DESIGN_WIDTH,
+            height: MOBILE_DESIGN_HEIGHT,
+            transform: `translate(-50%, -50%) scale(${mobileScale})`,
+            transformOrigin: "center center",
+          }}
+        >
+          <div className="relative flex h-full w-full flex-col justify-center">
           <div
-            className={`absolute h-105.5 w-2 left-49.75 top-0 bg-black origin-top transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
+            className={`absolute h-111 w-2 left-57.75 top-0 bg-black origin-top transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
           />
 
           <img
             src={yellowPuzzleIcon}
             alt="Yellow Puzzle Icon"
-            className="absolute left-20.5  top-95 w-6"
+            className="absolute left-28.5  top-101 w-6"
             style={{
               animation: YELLOW_ICON_ANIMATION,
               transformOrigin: "center center",
             }}
           />
-          <h1 className="text-[80px] leading-[0.84] text-left">
+          <h1 className="text-[80px] leading-[0.84] text-left ml-8">
             C
             <span
               className="text-transparent [-webkit-text-stroke:2px_#ef4444]"
@@ -124,19 +141,19 @@ export default function ComingSoon() {
             </span>
             MING
           </h1>
-          <p className="absolute top-105 left-2 font-albert-sans text-[12.5px] italic text-left py-4">
+          <p className="absolute top-110 left-10 font-albert-sans text-[12.5px] italic text-left py-4">
             - A new design experience is on its way
           </p>
 
           <div
-            className={`absolute my-6 h-118 w-2 right-0.5 top-111.75 origin-bottom bg-[#9C2521] transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
+            className={`absolute my-6 h-118 w-2 right-6.5 top-117.75 origin-bottom bg-[#9C2521] transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
           />
 
           {/* //Puzzle Icons for Soon */}
           <img
             src={redPuzzleIcon}
             alt="Red Puzzle Icon"
-            className="absolute left-54  top-121.5 w-6"
+            className="absolute left-60  top-127.5 w-6"
             style={{
               animation: RED_ICON_ANIMATION,
               transformOrigin: "center center",
@@ -145,14 +162,14 @@ export default function ComingSoon() {
           <img
             src={bluePuzzleIcon}
             alt="Blue Puzzle Icon"
-            className="absolute left-70 top-121.5 w-6 "
+            className="absolute left-76.25 top-127.5 w-6 "
             style={{
               animation: BLUE_ICON_ANIMATION,
               transformOrigin: "center center",
             }}
           />
 
-          <h1 className="mt-10 text-[80px] leading-[0.84] text-right">
+          <h1 className="mt-10 text-[80px] leading-[0.84] text-right mr-6">
             S
             <span
               className="text-transparent [-webkit-text-stroke:2px_#988E18]"
@@ -169,10 +186,11 @@ export default function ComingSoon() {
             N
           </h1>
 
-          <p className=" absolute mt-4 font-albert-sans top-130 left-36 text-[12.5px] italic text-left">
+          <p className=" absolute mt-4 font-albert-sans top-136 left-42 text-[12.5px] italic text-left">
             Click to solve our creative puzzle and <br /> piece together what is
             coming soon.
           </p>
+          </div>
         </div>
       </div>
     );
@@ -245,7 +263,7 @@ export default function ComingSoon() {
             }}
           />
 
-          <h1 className="text-[180px] leading-31 w-[60%] text-left">
+          <h1 className="text-[180px] leading-31 w-[60%] ">
             C
             <span
               className="text-transparent [-webkit-text-stroke:5px_#ef4444]"
