@@ -71,11 +71,11 @@ export default function ComingSoon() {
           @keyframes strokeToSolidRed {
             0% {
               color: transparent;
-              -webkit-text-stroke: 2px #ef4444;
+              -webkit-text-stroke: 2px #981838;
             }
             100% {
-              color: #ef4444;
-              -webkit-text-stroke: 2px #ef4444;
+              color: #5E1729;
+              -webkit-text-stroke: 2px #981838;
             }
           }
 
