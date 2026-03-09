@@ -6,9 +6,11 @@ import waitMobileBg from "./assets/wait-mobile-bg.png";
 import waitBg from "./assets/wait-bg.png";
 import TextAnimator from "./Components/TextAnimator";
 import { Wait } from "./Components/Wait";
+import ComingSoon from "./Components/ComingSoon";
 
 function App() {
   const [showWait, setShowWait] = useState(false);
+  const [showComingSoon, setShowComingSoon] = useState(false);
 
   return (
     <>
@@ -24,7 +26,7 @@ function App() {
         }
       `}</style>
       <div
-        className="relative overflow-hidden min-h-screen"
+        className={`relative overflow-hidden min-h-screen ${showComingSoon ? "bg-white" : ""}`}
       >
         <div
           className="base-bg absolute inset-0 bg-fixed bg-no-repeat bg-cover transition-opacity duration-700"
@@ -32,14 +34,17 @@ function App() {
         />
         <div
           className="wait-bg absolute inset-0 bg-fixed bg-no-repeat bg-cover transition-opacity duration-700"
-          style={{ opacity: showWait ? 1 : 0 }}
+          style={{ opacity: showWait && !showComingSoon ? 1 : 0 }}
         />
 
         <div className="relative z-50 px-6 py-18 lg:px-24">
           <NavBar />
         </div>
         {!showWait && <TextAnimator onComplete={() => setShowWait(true)} />}
-        {showWait && <Wait />}
+        {showWait && !showComingSoon && (
+          <Wait onComplete={() => setShowComingSoon(true)} />
+        )}
+        {showComingSoon && <ComingSoon />}
       </div>
     </>
   );

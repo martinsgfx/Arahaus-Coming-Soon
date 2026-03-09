@@ -7,8 +7,9 @@ const ICON_FRAMES = [lookDownIcon, lookUpIcon, lookDownAgainIcon];
 const FRAME_DURATION_MS = 450;
 const WAIT_FADE_IN_MS = 500;
 const ICON_SEQUENCE = [1, 2, 0, 1, 2];
+const WAIT_COMPLETE_DELAY_MS = FRAME_DURATION_MS * ICON_SEQUENCE.length + 600;
 
-export const Wait = () => {
+export const Wait = ({ onComplete }) => {
   const [frameIndex, setFrameIndex] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -27,6 +28,14 @@ export const Wait = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const completeTimer = setTimeout(() => {
+      onComplete?.();
+    }, WAIT_COMPLETE_DELAY_MS);
+
+    return () => clearTimeout(completeTimer);
+  }, [onComplete]);
+
   return (
     <div
       style={{
@@ -43,7 +52,7 @@ export const Wait = () => {
           />
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold py-2 sm:py-3">Waitttttt!</h1>
-        <p className="mx-auto max-w-[26ch] text-base sm:text-xl lg:text-2xl leading-snug font-normal">
+        <p className="mx-auto max-w-[30ch] text-base sm:text-xl lg:text-2xl leading-snug font-normal">
           Are we ready to show the world yet
         </p>
       </div>

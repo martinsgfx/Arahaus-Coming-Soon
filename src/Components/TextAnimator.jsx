@@ -425,7 +425,7 @@ export default function TextAnimator({ onComplete }) {
           backgroundPosition: "center",
           borderRadius: "50% 50% 0 0 / 25% 25% 0 0", // oval top edge
           width: "min(92vw, 700px)",
-          zIndex: 10,
+          zIndex: 20,
         }}
       >
         {[
