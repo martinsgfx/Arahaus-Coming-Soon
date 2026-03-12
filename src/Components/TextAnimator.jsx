@@ -363,7 +363,7 @@ export default function TextAnimator({ onComplete }) {
       {/* ── SEARCH BAR + SLIDER WRAPPER ──
           Centered on the page. Hidden briefly during blob grow transition */}
       <div
-        className="absolute left-1/2 top-1/2 w-[90vw] max-w-105w-[80vw] sm:max-w-115 lg:w-130 transition-opacity duration-300"
+        className="absolute left-1/2 top-1/2 w-80vw] max-w-105w-[80vw] sm:max-w-115 lg:w-130 transition-opacity duration-300"
         style={{
           transform: "translate(-50%, -50%)",
           opacity: showSearchBar ? 1 : 0,
@@ -373,7 +373,7 @@ export default function TextAnimator({ onComplete }) {
         {/* ── PILL SEARCH BAR ──
             Frosted glass pill shape. Shows the typewriter text inside */}
         <div
-          className="flex items-center justify-center rounded-full font-bold font-sans px-4 py-2 sm:px-6 sm:py-3 backdrop-blur-sm"
+          className="flex items-center justify-center w-100 rounded-full font-bold font-sans px-4 py-2 sm:px-6 sm:py-3 backdrop-blur-sm"
           style={{
             background: "rgba(255,255,255,0.82)",
             boxShadow: "0px 20px 16px rgba(0,0,0,0.20)",
@@ -405,7 +405,7 @@ export default function TextAnimator({ onComplete }) {
             Rainbow gradient range input that auto-animates from pink to yellow-green.
             pointerEvents: none means the user cannot interact with it */}
         <div
-          className="mt-4 sm:mt-6 transition-all duration-500"
+          className="mt-4 sm:mt-6 w-100 transition-all duration-500"
           style={{
             opacity: sliderVisible ? 1 : 0,
             transform: sliderVisible ? "translateY(0)" : "translateY(8px)",

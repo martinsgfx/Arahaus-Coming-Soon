@@ -311,7 +311,7 @@ export default function ComingSoon() {
       >
         <div className="relative h-full w-full font-medium flex flex-col gap-0 items-center justify-center">
           <div
-            className={`absolute left-[45.14%] top-[0%] h-147 w-5 -translate-x-1/2 origin-top bg-black transition-transform duration-700 ease-out ${growDesktopLine ? "scale-y-100" : "scale-y-0"}`}
+            className={`absolute left-[45.14%] top-[0%] h-170 w-5 -translate-x-1/2 origin-top bg-black transition-transform duration-700 ease-out ${growDesktopLine ? "scale-y-100" : "scale-y-0"}`}
           />
 
           <h1 className="text-[180px] leading-31 w-[60%] ">
