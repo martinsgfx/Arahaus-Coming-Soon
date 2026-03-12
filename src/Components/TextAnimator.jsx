@@ -75,9 +75,7 @@ export default function TextAnimator({ onComplete }) {
   const [blobsVisible, setBlobsVisible] = useState(false);
 
   // The current fill color of the main blob (starts pink, changes with slider)
-  const [blobColor, setBlobColor] = useState(
-    hslToHex(INITIAL_SLIDER_HUE, SLIDER_SATURATION, SLIDER_LIGHTNESS)
-  );
+  const [blobColor, setBlobColor] = useState("#B94D8C");
 
   // Whether the blob has expanded to fill most of the screen
   const [blobFullscreen, setBlobFullscreen] = useState(false);
@@ -316,7 +314,7 @@ export default function TextAnimator({ onComplete }) {
           One of the 3 color options shown in scene 2.
           Pops in after phrase 1 is typed, disappears when pink blob expands */}
       <div
-        className="absolute"
+        className="absolute mix-blend-color-burn"
         style={{
           left: "calc(50vw - 3.4375rem)",
           top: "52vh",
@@ -340,7 +338,7 @@ export default function TextAnimator({ onComplete }) {
           Third color option shown in scene 2.
           Slightly delayed pop-in after the red blob */}
       <div
-        className="absolute"
+        className="absolute mix-blend-color-burn"
         style={{
           left: "calc(50vw + 3.4375rem)",
           top: "52vh",
@@ -373,7 +371,7 @@ export default function TextAnimator({ onComplete }) {
         {/* ── PILL SEARCH BAR ──
             Frosted glass pill shape. Shows the typewriter text inside */}
         <div
-          className="flex items-center justify-center w-100 rounded-full font-bold font-sans px-4 py-2 sm:px-6 sm:py-3 backdrop-blur-sm"
+          className="flex items-center justify-center rounded-full font-bold font-sans px-4 py-2 sm:px-6 sm:py-3 backdrop-blur-sm"
           style={{
             background: "rgba(255,255,255,0.82)",
             boxShadow: "0px 20px 16px rgba(0,0,0,0.20)",
@@ -405,7 +403,7 @@ export default function TextAnimator({ onComplete }) {
             Rainbow gradient range input that auto-animates from pink to yellow-green.
             pointerEvents: none means the user cannot interact with it */}
         <div
-          className="mt-4 sm:mt-6 w-100 transition-all duration-500"
+          className="mt-4 sm:mt-6 transition-all duration-500"
           style={{
             opacity: sliderVisible ? 1 : 0,
             transform: sliderVisible ? "translateY(0)" : "translateY(8px)",

@@ -289,7 +289,7 @@ export default function PuzzleBuilder({ onClose = () => {} }) {
         {/* Header */}
         <div className="flex items-center justify-between px-4 sm:px-5 pt-4 sm:pt-5 pb-3">
           <div>
-            <h1 className="text-sm sm:text-base font-bold text-slate-800 tracking-tight">
+            <h1 className="text-sm sm:text-base font-sans font-bold text-slate-800 tracking-tight">
               Puzzle Builder
             </h1>
             <div className="flex items-center gap-2 mt-1">
@@ -302,7 +302,7 @@ export default function PuzzleBuilder({ onClose = () => {} }) {
                   style={{ width: `${(placedCount / TOTAL) * 100}%` }}
                 />
               </div>
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-gray">
                 {placedCount} / {TOTAL}
               </span>
             </div>
@@ -310,14 +310,14 @@ export default function PuzzleBuilder({ onClose = () => {} }) {
           <div className="flex gap-2 items-center">
             <button
               onClick={() => setShowGuide(true)}
-              className="text-xs bg-amber-50 active:bg-amber-100 text-amber-600 border border-amber-200 px-3 py-1.5 rounded-full font-medium flex items-center gap-1"
+              className="text-xs font-sans bg-amber-50 active:bg-amber-100 text-amber-600 border border-amber-200 px-3 py-1.5 rounded-full flex items-center gap-1"
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
               <span>👁</span> Guide
             </button>
             <button
               onClick={handleReset}
-              className="text-xs bg-slate-100 active:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-full font-medium"
+              className="text-xs font-sans bg-slate-100 active:bg-slate-200 text-slate-600 px-3 py-1.5 rounded-full "
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
               Reset
@@ -325,7 +325,7 @@ export default function PuzzleBuilder({ onClose = () => {} }) {
             <button
               onClick={onClose}
               aria-label="Close puzzle"
-              className="w-9 h-9 rounded-full border-2 border-slate-200 flex items-center justify-center text-slate-400 text-xl leading-none"
+              className="w-9 h-9 rounded-full border-2 border-slate-200 flex items-center justify-center text-gray text-xl leading-none"
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
               ×
@@ -418,7 +418,7 @@ export default function PuzzleBuilder({ onClose = () => {} }) {
 
         {/* Hint bar */}
         <div className="px-4 py-1.5 bg-slate-50 border-t border-slate-100">
-          <p className="text-xs text-slate-400 text-center leading-tight">
+          <p className="text-xs text-gray text-center leading-tight">
             {selected !== null
               ? "✦ Tap a slot on the board to place the piece"
               : "Tap any piece below to select it"}
@@ -505,13 +505,13 @@ export default function PuzzleBuilder({ onClose = () => {} }) {
                 <h2 className="text-sm font-bold text-slate-800">
                   Puzzle Guide
                 </h2>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-gray">
                   Use this as a reference while solving
                 </p>
               </div>
               <button
                 onClick={() => setShowGuide(false)}
-                className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 text-lg leading-none"
+                className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-gray text-lg leading-none"
                 style={{ WebkitTapHighlightColor: "transparent" }}
               >
                 ×
@@ -534,7 +534,7 @@ export default function PuzzleBuilder({ onClose = () => {} }) {
               />
             </div>
 
-            <p className="text-xs text-slate-400 text-center pb-5 px-4">
+            <p className="text-xs text-gray text-center pb-5 px-4">
               Tap anywhere outside to close
             </p>
           </div>
@@ -553,16 +553,16 @@ export default function PuzzleBuilder({ onClose = () => {} }) {
             onClick={(e) => e.stopPropagation()}
           >
             <img src={puzzleImage} alt="Puzzle" />
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-800">
+            <h2 className="text-xl sm:text-2xl font-bold text-black">
               Nice Work!
             </h2>
-            <p className="text-slate-400 text-sm">
+            <p className="text-white text-sm">
               You’ve unlocked what’s coming soon. We’re crafting something bold
               for you.
             </p>
             <button
               onClick={handleReset}
-              className="mt-1 w-full sm:w-auto bg-slate-900 active:bg-slate-700 text-white px-8 py-3 rounded-full text-sm font-medium transition-colors"
+              className="mt-1 w-full sm:w-auto bg-black active:bg-black text-white px-8 py-3 rounded-full text-sm font-medium transition-colors"
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
               Play Again
