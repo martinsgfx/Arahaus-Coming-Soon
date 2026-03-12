@@ -94,6 +94,13 @@ export default function TextAnimator({ onComplete }) {
   // Controls final full-scene fade out after all animation stages finish
   const [isFadingOut, setIsFadingOut] = useState(false);
 
+  // Keeps fullscreen blob proportionate on larger displays.
+  const [fullscreenBlobScale, setFullscreenBlobScale] = useState(() => {
+    const viewportWidth = window.innerWidth;
+    const widthFactor = Math.min(Math.max(viewportWidth / 1920, 1), 1.45);
+    return 23 * widthFactor;
+  });
+
   // Which phrase to show based on the current stage
   const currentPhrase =
     stage === "typing1"
@@ -226,6 +233,19 @@ export default function TextAnimator({ onComplete }) {
     };
   }, [stage, onComplete]);
 
+  useEffect(() => {
+    const updateBlobScale = () => {
+      const viewportWidth = window.innerWidth;
+      const widthFactor = Math.min(Math.max(viewportWidth / 1920, 1), 1.45);
+      setFullscreenBlobScale(23 * widthFactor);
+    };
+
+    window.addEventListener("resize", updateBlobScale);
+    return () => {
+      window.removeEventListener("resize", updateBlobScale);
+    };
+  }, []);
+
   // Hide the search bar only during the blob grow transition
   const showSearchBar = stage !== "blobGrow";
   const sceneFadeOpacity = isFadingOut ? 0 : 1;
@@ -242,14 +262,14 @@ export default function TextAnimator({ onComplete }) {
       <div
         className="absolute mix-blend-color-burn "
         style={{
-          left: blobFullscreen ? "53%" : "calc(50% - 90px)",
-          top: blobFullscreen ? "75%" : "52%",
+          left: "53vw",
+          top: "75vh",
           width: 80,
           height: 80,
           opacity: (blobsVisible || blobFullscreen ? 1 : 0) * sceneFadeOpacity,
           transform: blobFullscreen
-            ? "translate(-50%, -50%) scale(23)" // big — fills most of screen
-            : "translate(-50%, 40px) scale(1)", // small — sits below search bar
+            ? `translate(-50%, -50%) scale(${fullscreenBlobScale})` // big — fills most of screen
+            : "translate(calc(-50% - 3vw - 5.625rem), calc(-23vh + 40px)) scale(1)", // small — starts from the original small position and animates to big start point
           transition:
             `transform 0.9s cubic-bezier(0.4,0,0.2,1), opacity ${isFadingOut ? FADE_OUT_DURATION_MS : 400}ms ease`,
           zIndex: 1,
@@ -271,8 +291,8 @@ export default function TextAnimator({ onComplete }) {
       <div
         className="absolute pointer-events-none"
         style={{
-          left: "calc(50% - 80px)",
-          top: "54%",
+          left: "calc(50vw - 5rem)",
+          top: "54vh",
           width: 38,
           height: 38,
           opacity: blobsVisible && !blobFullscreen ? 1 : 0,
@@ -298,8 +318,8 @@ export default function TextAnimator({ onComplete }) {
       <div
         className="absolute"
         style={{
-          left: "calc(50% - 55px)",
-          top: "52%",
+          left: "calc(50vw - 3.4375rem)",
+          top: "52vh",
           width: 80,
           height: 80,
           opacity: blobsVisible && !blobFullscreen ? 1 : 0,
@@ -322,8 +342,8 @@ export default function TextAnimator({ onComplete }) {
       <div
         className="absolute"
         style={{
-          left: "calc(50% + 55px)",
-          top: "52%",
+          left: "calc(50vw + 3.4375rem)",
+          top: "52vh",
           width: 80,
           height: 80,
           opacity: blobsVisible && !blobFullscreen ? 1 : 0,
@@ -446,7 +466,7 @@ export default function TextAnimator({ onComplete }) {
               marginLeft,
               marginRight,
               position: "relative",
-              top: "-70px",
+              top: "-4.375rem",
               transitionDelay: `${0.4 + i * 0.06}s`,
               transform: animatePalette
                 ? i === 3

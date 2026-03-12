@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import yellowPuzzleIcon from "../assets/puzzle-yellow.png";
-import redPuzzleIcon from "../assets/puzzle-red.png";
-import bluePuzzleIcon from "../assets/puzzle-blue.png";
+import yellowPuzzleIcon from "../assets/puzzle-yellow.svg";
+import redPuzzleIcon from "../assets/puzzle-red.svg";
+import bluePuzzleIcon from "../assets/puzzle-blue.svg";
+import PuzzleBuilder from "./PuzzleBuilder";
 
 const MOBILE_BREAKPOINT = 768;
 const DESIGN_WIDTH = 1920;
@@ -11,9 +12,12 @@ const MOBILE_DESIGN_HEIGHT = 932;
 const YELLOW_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite 0.12s";
 const RED_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite";
 const BLUE_ICON_ANIMATION = "puzzleSpinPulse 5.4s ease-in-out infinite 0.25s";
-const RED_STROKE_TO_SOLID_ANIMATION = "strokeToSolidRed 3.1s ease-in-out infinite alternate";
-const YELLOW_STROKE_TO_SOLID_ANIMATION = "strokeToSolidYellow 3.1s ease-in-out infinite alternate";
-const GREEN_STROKE_TO_SOLID_ANIMATION = "strokeToSolidGreen 3.1s ease-in-out infinite alternate";
+const RED_STROKE_TO_SOLID_ANIMATION =
+  "strokeToSolidRed 3.1s ease-in-out infinite alternate";
+const YELLOW_STROKE_TO_SOLID_ANIMATION =
+  "strokeToSolidYellow 3.1s ease-in-out infinite alternate";
+const GREEN_STROKE_TO_SOLID_ANIMATION =
+  "strokeToSolidGreen 3.1s ease-in-out infinite alternate";
 
 export default function ComingSoon() {
   const [isMobile, setIsMobile] = useState(
@@ -23,6 +27,29 @@ export default function ComingSoon() {
   const [mobileScale, setMobileScale] = useState(1);
   const [growDesktopLine, setGrowDesktopLine] = useState(false);
   const [growMobileLine, setGrowMobileLine] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  const handleComingPuzzleClick = () => {
+    setShowOverlay(true);
+  };
+
+  const handleOverlayClose = () => {
+    setShowOverlay(false);
+  };
+
+  const handleOverlayKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " " || event.key === "Escape") {
+      event.preventDefault();
+      handleOverlayClose();
+    }
+  };
+
+  const handleComingPuzzleKeyDown = (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleComingPuzzleClick();
+    }
+  };
 
   useEffect(() => {
     const updateViewport = () => {
@@ -118,80 +145,114 @@ export default function ComingSoon() {
           }}
         >
           <div className="relative flex h-full w-full flex-col justify-center">
-          <div
-            className={`absolute h-111 w-2 left-57.75 top-0 bg-black origin-top transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
-          />
+            <div
+              className={`absolute h-111 w-2 left-57.75 top-0 bg-black origin-top transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
+            />
 
-          <img
-            src={yellowPuzzleIcon}
-            alt="Yellow Puzzle Icon"
-            className="absolute left-28.5  top-101 w-6"
-            style={{
-              animation: YELLOW_ICON_ANIMATION,
-              transformOrigin: "center center",
-            }}
-          />
-          <h1 className="text-[80px] leading-[0.84] text-left ml-8">
-            C
-            <span
-              className="text-transparent [-webkit-text-stroke:2px_#ef4444]"
-              style={{ animation: RED_STROKE_TO_SOLID_ANIMATION }}
-            >
-              O
-            </span>
-            MING
-          </h1>
-          <p className="absolute top-110 left-10 font-albert-sans text-[12.5px] italic text-left py-4">
-            - A new design experience is on its way
-          </p>
+            
+            <h1 className="text-[80px] leading-[0.84] text-left ml-8">
+              C
+              <img
+              src={yellowPuzzleIcon}
+              alt="Yellow Puzzle Icon"
+                className="absolute left-28.5  top-101 w-6 cursor-pointer"
+              style={{
+                animation: YELLOW_ICON_ANIMATION,
+                transformOrigin: "center center",
+              }}
+                onClick={handleComingPuzzleClick}
+                onKeyDown={handleComingPuzzleKeyDown}
+                role="button"
+                tabIndex={0}
+            />
+              <span
+                className="text-transparent [-webkit-text-stroke:2px_#ef4444] cursor-pointer"
+                style={{ animation: RED_STROKE_TO_SOLID_ANIMATION }}
+                onClick={handleComingPuzzleClick}
+                onKeyDown={handleComingPuzzleKeyDown}
+                role="button"
+                tabIndex={0}
+              >
+                O
+              </span>
+              MING
+            </h1>
+            <p className="absolute top-110 left-10 font-albert-sans text-[12.5px] italic text-left py-4">
+              - A new design experience is on its way
+            </p>
 
-          <div
-            className={`absolute my-6 h-118 w-2 right-6.5 top-117.75 origin-bottom bg-[#9C2521] transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
-          />
+            <div
+              className={`absolute my-6 h-118 w-2 right-6.5 top-117.75 origin-bottom bg-[#9C2521] transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
+            />
 
-          {/* //Puzzle Icons for Soon */}
-          <img
-            src={redPuzzleIcon}
-            alt="Red Puzzle Icon"
-            className="absolute left-60  top-127.5 w-6"
-            style={{
-              animation: RED_ICON_ANIMATION,
-              transformOrigin: "center center",
-            }}
-          />
-          <img
-            src={bluePuzzleIcon}
-            alt="Blue Puzzle Icon"
-            className="absolute left-76.25 top-127.5 w-6 "
-            style={{
-              animation: BLUE_ICON_ANIMATION,
-              transformOrigin: "center center",
-            }}
-          />
+            {/* //Puzzle Icons for Soon */}
+            <img
+              src={redPuzzleIcon}
+              alt="Red Puzzle Icon"
+              className="absolute left-60 top-127.5 w-6 cursor-pointer"
+              style={{
+                animation: RED_ICON_ANIMATION,
+                transformOrigin: "center center",
+              }}
+              onClick={handleComingPuzzleClick}
+              onKeyDown={handleComingPuzzleKeyDown}
+              role="button"
+              tabIndex={0}
+            />
+            <img
+              src={bluePuzzleIcon}
+              alt="Blue Puzzle Icon"
+              className="absolute left-76.25 top-127.5 w-6 cursor-pointer"
+              style={{
+                animation: BLUE_ICON_ANIMATION,
+                transformOrigin: "center center",
+              }}
+              onClick={handleComingPuzzleClick}
+              onKeyDown={handleComingPuzzleKeyDown}
+              role="button"
+              tabIndex={0}
+            />
 
-          <h1 className="mt-10 text-[80px] leading-[0.84] text-right mr-6">
-            S
-            <span
-              className="text-transparent [-webkit-text-stroke:2px_#988E18]"
-              style={{ animation: YELLOW_STROKE_TO_SOLID_ANIMATION }}
-            >
-              O
-            </span>
-            <span
-              className="text-transparent [-webkit-text-stroke:2px_#2F9818]"
-              style={{ animation: GREEN_STROKE_TO_SOLID_ANIMATION }}
-            >
-              O
-            </span>
-            N
-          </h1>
+            <h1 className="mt-10 text-[80px] leading-[0.84] text-right mr-6">
+              S
+              <span
+                className="text-transparent [-webkit-text-stroke:2px_#988E18]"
+                style={{ animation: YELLOW_STROKE_TO_SOLID_ANIMATION }}
+              >
+                O
+              </span>
+              <span
+                className="text-transparent [-webkit-text-stroke:2px_#2F9818]"
+                style={{ animation: GREEN_STROKE_TO_SOLID_ANIMATION }}
+              >
+                O
+              </span>
+              N
+            </h1>
 
-          <p className=" absolute mt-4 font-albert-sans top-136 left-42 text-[12.5px] italic text-left">
-            Click to solve our creative puzzle and <br /> piece together what is
-            coming soon.
-          </p>
+            <p className=" absolute mt-4 font-albert-sans top-136 left-42 text-[12.5px] italic text-left">
+              Click to solve our creative puzzle and <br /> piece together what
+              is coming soon.
+            </p>
           </div>
         </div>
+
+        {showOverlay && (
+          <div
+            className="absolute inset-0 z-300 flex items-center justify-center bg-black/45"
+            onClick={handleOverlayClose}
+            role="button"
+            tabIndex={0}
+            onKeyDown={handleOverlayKeyDown}
+          >
+            <div
+              className="w-full max-w-104 px-4"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <PuzzleBuilder onClose={handleOverlayClose} />
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -201,7 +262,7 @@ export default function ComingSoon() {
       <style>{`
         @keyframes puzzleSpinPulse {
           0% { transform: rotate(0deg) scale(0.86); }
-          50% { transform: rotate(360deg) scale(2.86); }
+          50% { transform: rotate(360deg) scale(1.66); }
           100% { transform: rotate(0deg) scale(0.86); }
         }
 
@@ -252,23 +313,33 @@ export default function ComingSoon() {
           <div
             className={`absolute left-[45.14%] top-[0%] h-147 w-5 -translate-x-1/2 origin-top bg-black transition-transform duration-700 ease-out ${growDesktopLine ? "scale-y-100" : "scale-y-0"}`}
           />
-          {/* // Puzzle Icon for coming */}
-          <img
-            src={yellowPuzzleIcon}
-            alt="Yellow Puzzle Icon"
-            className="absolute left-144 top-116"
-            style={{
-              animation: YELLOW_ICON_ANIMATION,
-              transformOrigin: "center center",
-            }}
-          />
 
           <h1 className="text-[180px] leading-31 w-[60%] ">
             C
+            
+            {/* // Puzzle Icon for coming */}
+            <img
+              src={yellowPuzzleIcon}
+              alt="Yellow Puzzle Icon"
+              className="absolute left-[29.17%] top-[41.48%] cursor-pointer"
+              style={{
+                animation: YELLOW_ICON_ANIMATION,
+                transformOrigin: "center center",
+              }}
+              onClick={handleComingPuzzleClick}
+              onKeyDown={handleComingPuzzleKeyDown}
+              role="button"
+              tabIndex={0}
+            />
             <span
-              className="text-transparent [-webkit-text-stroke:5px_#ef4444]"
+              className="text-transparent [-webkit-text-stroke:5px_#ef4444] cursor-pointer"
               style={{ animation: RED_STROKE_TO_SOLID_ANIMATION }}
+              onClick={handleComingPuzzleClick}
+              onKeyDown={handleComingPuzzleKeyDown}
+              role="button"
+              tabIndex={0}
             >
+                
               O
             </span>
             MING
@@ -282,20 +353,28 @@ export default function ComingSoon() {
           <img
             src={redPuzzleIcon}
             alt="Red Puzzle Icon"
-            className="absolute left-271 top-148"
+            className="absolute left-[55.63%] top-[53.33%] cursor-pointer"
             style={{
               animation: RED_ICON_ANIMATION,
               transformOrigin: "center center",
             }}
+            onClick={handleComingPuzzleClick}
+            onKeyDown={handleComingPuzzleKeyDown}
+            role="button"
+            tabIndex={0}
           />
           <img
             src={bluePuzzleIcon}
             alt="Blue Puzzle Icon"
-            className="absolute left-307 top-148"
+            className="absolute left-[63.13%] top-[53.33%] cursor-pointer"
             style={{
               animation: BLUE_ICON_ANIMATION,
               transformOrigin: "center center",
             }}
+            onClick={handleComingPuzzleClick}
+            onKeyDown={handleComingPuzzleKeyDown}
+            role="button"
+            tabIndex={0}
           />
 
           <h1 className="text-[180px] leading-31 w-[62%] text-right -ml-52">
@@ -314,15 +393,32 @@ export default function ComingSoon() {
             </span>
             N
           </h1>
-          <p className="text-2xl absolute left-101 top-140 font-albert-sans italic">
+          <p className="text-2xl absolute left-[21.04%] top-[51.85%] font-albert-sans italic">
             - A new design experience is on its way
           </p>
-          <p className="text-2xl absolute right-132 top-173 font-albert-sans italic">
+          <p className="text-2xl absolute right-[27.5%] top-[64.07%] font-albert-sans italic">
             Click to solve our creative puzzle and piece <br /> together what is
             coming soon.
           </p>
         </div>
       </div>
+
+      {showOverlay && (
+        <div
+          className="absolute inset-0 z-300 flex items-center justify-center bg-black/45"
+          onClick={handleOverlayClose}
+          role="button"
+          tabIndex={0}
+          onKeyDown={handleOverlayKeyDown}
+        >
+          <div
+            className="w-full max-w-136 px-6"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <PuzzleBuilder onClose={handleOverlayClose} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
