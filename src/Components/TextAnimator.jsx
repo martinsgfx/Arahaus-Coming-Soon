@@ -260,16 +260,15 @@ export default function TextAnimator({ onComplete }) {
       <div
         className="absolute mix-blend-color-burn "
         style={{
-          left: "53vw",
-          top: "75vh",
-          width: 80,
-          height: 80,
+          left: blobFullscreen ? "67vw" : "48vw",
+          top: blobFullscreen ? "98vh" : "69vh",
+          width: 100,
+          height: 100,
           opacity: (blobsVisible || blobFullscreen ? 1 : 0) * sceneFadeOpacity,
           transform: blobFullscreen
-            ? `translate(-50%, -50%) scale(${fullscreenBlobScale})` // big — fills most of screen
-            : "translate(calc(-50% - 3vw - 5.625rem), calc(-23vh + 40px)) scale(1)", // small — starts from the original small position and animates to big start point
-          transition:
-            `transform 0.9s cubic-bezier(0.4,0,0.2,1), opacity ${isFadingOut ? FADE_OUT_DURATION_MS : 400}ms ease`,
+            ? `translate(-50%, -50%) scale(${fullscreenBlobScale})` // big — centered at exact 50vw/50vh
+            : "translate(calc(-50% - 3vw - 5.625rem), calc(-23vh + 40px)) scale(1)", // small — original position
+          transition: `left 0.9s cubic-bezier(0.4,0,0.2,1), top 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1), opacity ${isFadingOut ? FADE_OUT_DURATION_MS : 400}ms ease`,
           zIndex: 1,
         }}
       >
@@ -284,218 +283,237 @@ export default function TextAnimator({ onComplete }) {
           transition: `opacity ${FADE_OUT_DURATION_MS}ms ease`,
         }}
       >
-
-      {/* Arrow points to the first small blob while all 3 options are visible */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          left: "calc(50vw - 5rem)",
-          top: "54vh",
-          width: 38,
-          height: 38,
-          opacity: blobsVisible && !blobFullscreen ? 1 : 0,
-          transform:
-            blobsVisible && !blobFullscreen
-              ? "translate(-24px, 66px) scale(1)"
-              : "translate(-24px, 66px) scale(0)",
-          transition: "transform 0.5s ease 0.12s, opacity 0.5s ease 0.12s",
-          zIndex: 8,
-        }}
-      >
-        <img
-          src={arrowCursor}
-          alt=""
-          className="w-full h-full object-contain"
-          aria-hidden="true"
-        />
-      </div>
-
-      {/* ── RED BLOB ──
-          One of the 3 color options shown in scene 2.
-          Pops in after phrase 1 is typed, disappears when pink blob expands */}
-      <div
-        className="absolute mix-blend-color-burn"
-        style={{
-          left: "calc(50vw - 3.4375rem)",
-          top: "52vh",
-          width: 80,
-          height: 80,
-          opacity: blobsVisible && !blobFullscreen ? 1 : 0,
-          transform:
-            blobsVisible && !blobFullscreen
-              ? "translate(30px, 50px) scale(1)"
-              : "translate(30px, 50px) scale(0)",
-          transition: "transform 0.6s ease 0.12s, opacity 0.6s ease 0.12s",
-          zIndex: 5,
-        }}
-      >
-        <svg viewBox="0 0 100 100" width="80" height="80">
-          <path d={BLOB_PATH} fill="#792808" />
-        </svg>
-      </div>
-
-      {/* ── YELLOW-GREEN BLOB ──
-          Third color option shown in scene 2.
-          Slightly delayed pop-in after the red blob */}
-      <div
-        className="absolute mix-blend-color-burn"
-        style={{
-          left: "calc(50vw + 3.4375rem)",
-          top: "52vh",
-          width: 80,
-          height: 80,
-          opacity: blobsVisible && !blobFullscreen ? 1 : 0,
-          transform:
-            blobsVisible && !blobFullscreen
-              ? "translate(30px, 50px) scale(1)"
-              : "translate(30px, 50px) scale(0)",
-          transition: "transform 0.6s ease 0.24s, opacity 0.6s ease 0.24s",
-          zIndex: 1,
-        }}
-      >
-        <svg viewBox="0 0 100 100" width="80" height="80">
-          <path d={BLOB_PATH} fill="#C3FB0B" />
-        </svg>
-      </div>
-
-      {/* ── SEARCH BAR + SLIDER WRAPPER ──
-          Centered on the page. Hidden briefly during blob grow transition */}
-      <div
-        className="absolute left-1/2 top-1/2 w-80vw] max-w-105w-[80vw] sm:max-w-115 lg:w-130 transition-opacity duration-300"
-        style={{
-          transform: "translate(-50%, -50%)",
-          opacity: showSearchBar ? 1 : 0,
-          zIndex: 1,
-        }}  
-      >
-        {/* ── PILL SEARCH BAR ──
-            Frosted glass pill shape. Shows the typewriter text inside */}
+        {/* Arrow points to the first small blob while all 3 options are visible */}
         <div
-          className="flex items-center justify-center rounded-full font-bold font-sans px-4 py-2 sm:px-6 sm:py-3 backdrop-blur-sm"
+          className="absolute pointer-events-none"
           style={{
-            background: "rgba(255,255,255,0.82)",
-            boxShadow: "0px 20px 16px rgba(0,0,0,0.20)",
-            border: "3px solid white",
+            left: "calc(45vw - 5rem)",
+            top: "48vh",
+            width: 38,
+            height: 38,
+            opacity: blobsVisible && !blobFullscreen ? 1 : 0,
+            transform:
+              blobsVisible && !blobFullscreen
+                ? "translate(-24px, 66px) scale(1)"
+                : "translate(-24px, 66px) scale(0)",
+            transition: "transform 0.5s ease 0.12s, opacity 0.5s ease 0.12s",
+            zIndex: 8,
           }}
         >
-          <span
-            className="text-lg sm:text-xl lg:text-2xl"
-            style={{
-              color: "#b83010",
-              letterSpacing: " ",
-            }}
-          >
-            {/* The typed text builds up here */}
-            {displayed}
-            {/* Blinking cursor — animated via the blink keyframe below */}
-            <span
-              className="inline-block w-1 ml-1  align-middle"
-              style={{
-                height: "1.2em",
-                background: "#b83010",
-                animation: "blink 1s step-start infinite",
-              }}
-            />
-          </span>
-        </div>
-
-        {/* ── COLOR SLIDER ──
-            Rainbow gradient range input that auto-animates from pink to yellow-green.
-            pointerEvents: none means the user cannot interact with it */}
-        <div
-          className="mt-4 sm:mt-6 transition-all duration-500"
-          style={{
-            opacity: sliderVisible ? 1 : 0,
-            transform: sliderVisible ? "translateY(0)" : "translateY(8px)",
-            pointerEvents: "none",
-          }}
-        >
-          <input
-            type="range"
-            min="0"
-            max="360"
-            value={sliderHue}
-            readOnly
-            className="w-full h-2.5 rounded-full outline-none cursor-pointer appearance-none"
-            style={{
-              background:
-                "linear-gradient(to right, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000)",
-            }}
+          <img
+            src={arrowCursor}
+            alt=""
+            className="w-full h-full object-contain"
+            aria-hidden="true"
           />
         </div>
-      </div>
 
-      {/* ── ART TOOLS TRAY ──
+        {/* ── RED BLOB ──
+          One of the 3 color options shown in scene 2.
+          Pops in after phrase 1 is typed, disappears when pink blob expands */}
+        <div
+          className="absolute mix-blend-color-burn"
+          style={{
+            left: "calc(50vw - 3.4375rem)",
+            top: "46vh",
+            width: 100,
+            height: 100,
+            opacity: blobsVisible && !blobFullscreen ? 1 : 0,
+            transform:
+              blobsVisible && !blobFullscreen
+                ? "translate(30px, 50px) scale(1)"
+                : "translate(30px, 50px) scale(0)",
+            transition: "transform 0.6s ease 0.12s, opacity 0.6s ease 0.12s",
+            zIndex: 5,
+          }}
+        >
+          <svg viewBox="0 0 100 100" width="80" height="80">
+            <path d={BLOB_PATH} fill="#792808" />
+          </svg>
+        </div>
+
+        {/* ── YELLOW-GREEN BLOB ──
+          Third color option shown in scene 2.
+          Slightly delayed pop-in after the red blob */}
+        <div
+          className="absolute mix-blend-color-burn"
+          style={{
+            left: "calc(55vw + 3.4375rem)",
+            top: "46vh",
+            width: 100,
+            height: 100,
+            opacity: blobsVisible && !blobFullscreen ? 1 : 0,
+            transform:
+              blobsVisible && !blobFullscreen
+                ? "translate(30px, 50px) scale(1)"
+                : "translate(30px, 50px) scale(0)",
+            transition: "transform 0.6s ease 0.24s, opacity 0.6s ease 0.24s",
+            zIndex: 1,
+          }}
+        >
+          <svg viewBox="0 0 100 100" width="80" height="80">
+            <path d={BLOB_PATH} fill="#C3FB0B" />
+          </svg>
+        </div>
+
+        {/* ── SEARCH BAR + SLIDER WRAPPER ──
+          Centered on the page. Hidden briefly during blob grow transition */}
+        <div
+          className="absolute left-1/2 top-1/2 w-[70vw] sm:w-[40vw] lg:w-[21vw]  transition-opacity duration-300"
+          style={{
+            transform: "translate(-50%, -50%)",
+            opacity: showSearchBar ? 1 : 0,
+            zIndex: 1,
+          }}
+        >
+          {/* ── PILL SEARCH BAR ──
+            Frosted glass pill shape. Shows the typewriter text inside */}
+          <div
+            className="flex items-center justify-center rounded-full font-bold font-sans px-4 py-2 sm:px-6 sm:py-3 backdrop-blur-sm"
+            style={{
+              background: "rgba(255,255,255,0.82)",
+              boxShadow: "0px 20px 16px rgba(0,0,0,0.20)",
+              border: "3px solid white",
+            }}
+          >
+            <span
+              className="text-lg sm:text-xl lg:text-2xl"
+              style={{
+                color: "#b83010",
+                letterSpacing: " ",
+              }}
+            >
+              {/* The typed text builds up here */}
+              {displayed}
+              {/* Blinking cursor — animated via the blink keyframe below */}
+              <span
+                className="inline-block w-1 ml-1 align-middle"
+                style={{
+                  height: "1.2em",
+                  background: "#b83010",
+                  animation: "blink 1s step-start infinite",
+                }}
+              />
+            </span>
+          </div>
+
+          {/* ── COLOR SLIDER ──
+            Rainbow gradient range input that auto-animates from pink to yellow-green.
+            pointerEvents: none means the user cannot interact with it */}
+          <div
+            className="mt-16 sm:mt-21 w-[120%] -mx-[10%] lg:w-[140%] lg:-mx-[20%] xl:w-[160%] xl:-mx-[30%] transition-all duration-500"
+            style={{
+              opacity: sliderVisible ? 1 : 0,
+              transform: sliderVisible ? "translateY(0)" : "translateY(8px)",
+              pointerEvents: "none",
+            }}
+          >
+            <input
+              type="range"
+              min="0"
+              max="360"
+              value={sliderHue}
+              readOnly
+              className="w-full h-5 lg:h-6 rounded-full outline-none cursor-pointer appearance-none"
+              style={{
+                background:
+                  "linear-gradient(to right, #ff0000, #CC8A4D, #FFFF13, #6CCC56, #0BECF4, #3832E6, #E525E2, #E4202D)",
+              }}
+            />
+          </div>
+        </div>
+
+        {/* ── ART TOOLS TRAY ──
           Slides up from the bottom once the blob fills the screen.
           Oval/ellipse shaped tray with emoji art tools inside.
           Each tool pops in with a staggered delay (transitionDelay) */}
-      <div
-        className="absolute bottom-2 sm:bottom-5 left-1/2 flex items-end justify-center gap-1 px-5 sm:px-12 pt-3 sm:pt-5 pb-2 sm:pb-3"
-        style={{
-          transform: blobFullscreen
-            ? `translateX(-50%) translateY(${animatePalette ? 40 : 0}px)` // slides up into view, moves down during palette animation
-            : "translateX(-50%) translateY(60px)", // hidden below the screen
-          opacity: blobFullscreen ? 1 : 0,
-          transition: "transform 0.6s ease-out",
-          backgroundImage: `url(${artplate})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          borderRadius: "50% 50% 0 0 / 25% 25% 0 0", // oval top edge
-          width: "min(92vw, 700px)",
-          zIndex: 20,
-        }}
-      >
-        {[
-          { src: pen, size: 120, marginLeft: 0, marginRight: "-40px" },
-          { src: ink, size: 80, marginLeft: "10px", marginRight: "-40px" },
-          { src: pencilsCup, size: 150, marginLeft: "10px", marginRight: "-30px" },
-          { src: palette, size: 80, marginLeft: "10px", marginRight: "-30px" },
-          { src: brush, size: 110, marginLeft: "10px", marginRight: "-30px" },
-          { src: ruler, size: 150, marginLeft: "-40px", marginRight: "-30px" },
-          { src: pencil, size: 120, marginLeft: "-50px", marginRight: "-10px" },
-        ].map(({ src, size, marginLeft, marginRight }, i) => (
-          <div
-            key={i}
-            className="inline-flex justify-center overflow-hidden"
-            style={{
-              width: size,
-              height: size,
-              marginLeft,
-              marginRight,
-              position: "relative",
-              top: "-4.375rem",
-              transitionDelay: `${0.4 + i * 0.06}s`,
-              transform: animatePalette
-                ? i === 3
-                  ? "translateY(-80px) scale(1.4)"  // palette moves up and grows
-                  : "translateY(10px) scale(1)"     // others move down
-                : blobFullscreen
-                  ? "translateY(0) scale(1)"
-                  : "translateY(20px) scale(0.4)",
-              transition: "transform 0.6s ease-out",
-              opacity: blobFullscreen ? 1 : 0,
-            }}
-          >
-            <img
-              src={src}
-              alt="art tool"
-              className="max-w-full max-h-full object-contain"
-            />
-          </div>
-        ))}
-      </div>
+        <div
+          className="absolute bottom-2 sm:bottom-5 left-1/2 flex items-end justify-center gap-1 px-5 sm:px-12 pt-3 sm:pt-5 pb-2 sm:pb-3"
+          style={{
+            transform: blobFullscreen
+              ? `translateX(-50%) translateY(${animatePalette ? 40 : 0}px)` // slides up into view, moves down during palette animation
+              : "translateX(-50%) translateY(60px)", // hidden below the screen
+            opacity: blobFullscreen ? 1 : 0,
+            transition: "transform 0.6s ease-out",
+            backgroundImage: `url(${artplate})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+            borderRadius: "50% 50% 0 0 / 25% 25% 0 0", // oval top edge
+            width: "min(92vw, 700px)",
+            zIndex: 20,
+          }}
+        >
+          {[
+            { src: pen, size: 120, marginLeft: 0, marginRight: "-40px" },
+            { src: ink, size: 80, marginLeft: "10px", marginRight: "-40px" },
+            {
+              src: pencilsCup,
+              size: 150,
+              marginLeft: "10px",
+              marginRight: "-30px",
+            },
+            {
+              src: palette,
+              size: 80,
+              marginLeft: "10px",
+              marginRight: "-30px",
+            },
+            { src: brush, size: 110, marginLeft: "10px", marginRight: "-30px" },
+            {
+              src: ruler,
+              size: 150,
+              marginLeft: "-40px",
+              marginRight: "-30px",
+            },
+            {
+              src: pencil,
+              size: 120,
+              marginLeft: "-50px",
+              marginRight: "-10px",
+            },
+          ].map(({ src, size, marginLeft, marginRight }, i) => (
+            <div
+              key={i}
+              className="inline-flex justify-center overflow-hidden"
+              style={{
+                width: size,
+                height: size,
+                marginLeft,
+                marginRight,
+                position: "relative",
+                top: "-4.375rem",
+                transitionDelay: `${0.4 + i * 0.06}s`,
+                transform: animatePalette
+                  ? i === 3
+                    ? "translateY(-80px) scale(1.4)" // palette moves up and grows
+                    : "translateY(10px) scale(1)" // others move down
+                  : blobFullscreen
+                    ? "translateY(0) scale(1)"
+                    : "translateY(20px) scale(0.4)",
+                transition: "transform 0.6s ease-out",
+                opacity: blobFullscreen ? 1 : 0,
+              }}
+            >
+              <img
+                src={src}
+                alt="art tool"
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+          ))}
+        </div>
 
-      {/* ── GLOBAL STYLES ──
+        {/* ── GLOBAL STYLES ──
           blink: makes the cursor in the search bar flash on and off.
           slider thumb: styles the draggable circle handle on the range input */}
-      <style>{`
+        <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
         input[type=range]::-webkit-slider-thumb {
           -webkit-appearance: none;
-          width: 26px; height: 26px;
+          width: 52px; height: 52px;
           border-radius: 50%;
-          background: radial-gradient(circle at 35% 35%, #f0d0f0, #c090c0);
+          background: radial-gradient(circle at 35% 35%, transparent, #eb91d2);
           border: 2px solid rgba(255,255,255,0.8);
           box-shadow: 0 2px 10px rgba(0,0,0,0.25);
           cursor: pointer;

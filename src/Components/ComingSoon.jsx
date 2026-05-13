@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import yellowPuzzleIcon from "../assets/puzzle-yellow.svg";
 import redPuzzleIcon from "../assets/puzzle-red.svg";
 import bluePuzzleIcon from "../assets/puzzle-blue.svg";
-import PuzzleBuilder from "./PuzzleBuilder";
+import PuzzleBuilderRed from "./PuzzleBuilderRed";
+import PuzzleBuilderBlue from "./PuzzleBuilderBlue";
+import PuzzleBuilderGreen from "./PuzzleBuilderGreen";
+
 
 const MOBILE_BREAKPOINT = 768;
 const DESIGN_WIDTH = 1920;
@@ -28,13 +31,16 @@ export default function ComingSoon() {
   const [growDesktopLine, setGrowDesktopLine] = useState(false);
   const [growMobileLine, setGrowMobileLine] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayWhich, setOverlayWhich] = useState(null); // 'red' | 'yellow' | 'green'
 
-  const handleComingPuzzleClick = () => {
+  const handleComingPuzzleClick = (which) => {
+    setOverlayWhich(which || "yellow");
     setShowOverlay(true);
   };
 
   const handleOverlayClose = () => {
     setShowOverlay(false);
+    setOverlayWhich(null);
   };
 
   const handleOverlayKeyDown = (event) => {
@@ -44,10 +50,10 @@ export default function ComingSoon() {
     }
   };
 
-  const handleComingPuzzleKeyDown = (event) => {
+  const handleComingPuzzleKeyDown = (event, which) => {
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
-      handleComingPuzzleClick();
+      handleComingPuzzleClick(which);
     }
   };
 
@@ -160,8 +166,8 @@ export default function ComingSoon() {
                 animation: YELLOW_ICON_ANIMATION,
                 transformOrigin: "center center",
               }}
-                onClick={handleComingPuzzleClick}
-                onKeyDown={handleComingPuzzleKeyDown}
+                onClick={() => handleComingPuzzleClick("yellow")}
+                onKeyDown={(e) => handleComingPuzzleKeyDown(e, "yellow")}
                 role="button"
                 tabIndex={0}
             />
@@ -194,8 +200,8 @@ export default function ComingSoon() {
                 animation: RED_ICON_ANIMATION,
                 transformOrigin: "center center",
               }}
-              onClick={handleComingPuzzleClick}
-              onKeyDown={handleComingPuzzleKeyDown}
+              onClick={() => handleComingPuzzleClick("red")}
+              onKeyDown={(e) => handleComingPuzzleKeyDown(e, "red")}
               role="button"
               tabIndex={0}
             />
@@ -207,8 +213,8 @@ export default function ComingSoon() {
                 animation: BLUE_ICON_ANIMATION,
                 transformOrigin: "center center",
               }}
-              onClick={handleComingPuzzleClick}
-              onKeyDown={handleComingPuzzleKeyDown}
+              onClick={() => handleComingPuzzleClick("blue")}
+              onKeyDown={(e) => handleComingPuzzleKeyDown(e, "blue")}
               role="button"
               tabIndex={0}
             />
@@ -237,7 +243,7 @@ export default function ComingSoon() {
           </div>
         </div>
 
-        {showOverlay && (
+        {showOverlay && overlayWhich && (
           <div
             className="absolute inset-0 z-300 flex items-center justify-center bg-black/45"
             onClick={handleOverlayClose}
@@ -249,7 +255,15 @@ export default function ComingSoon() {
               className="w-full max-w-104 px-4"
               onClick={(event) => event.stopPropagation()}
             >
-              <PuzzleBuilder onClose={handleOverlayClose} />
+              {overlayWhich === "red" && (
+                <PuzzleBuilderRed onClose={handleOverlayClose} />
+              )}
+              {overlayWhich === "yellow" && (
+                <PuzzleBuilderGreen onClose={handleOverlayClose} />
+              )}
+              {overlayWhich === "blue" && (
+                <PuzzleBuilderBlue onClose={handleOverlayClose} />
+              )}
             </div>
           </div>
         )}
@@ -321,13 +335,13 @@ export default function ComingSoon() {
             <img
               src={yellowPuzzleIcon}
               alt="Yellow Puzzle Icon"
-              className="absolute left-[29.17%] top-[41.48%] cursor-pointer"
+              className="absolute left-[29.3%] top-[42.12%] w-16 cursor-pointer"
               style={{
                 animation: YELLOW_ICON_ANIMATION,
                 transformOrigin: "center center",
               }}
-              onClick={handleComingPuzzleClick}
-              onKeyDown={handleComingPuzzleKeyDown}
+              onClick={() => handleComingPuzzleClick("yellow")}
+              onKeyDown={(e) => handleComingPuzzleKeyDown(e, "yellow")}
               role="button"
               tabIndex={0}
             />
@@ -353,26 +367,26 @@ export default function ComingSoon() {
           <img
             src={redPuzzleIcon}
             alt="Red Puzzle Icon"
-            className="absolute left-[55.63%] top-[53.33%] cursor-pointer"
+            className="absolute left-[55.93%] top-[53.33%] w-16 cursor-pointer"
             style={{
               animation: RED_ICON_ANIMATION,
               transformOrigin: "center center",
             }}
-            onClick={handleComingPuzzleClick}
-            onKeyDown={handleComingPuzzleKeyDown}
+            onClick={() => handleComingPuzzleClick("red")}
+            onKeyDown={(e) => handleComingPuzzleKeyDown(e, "red")}
             role="button"
             tabIndex={0}
           />
           <img
             src={bluePuzzleIcon}
             alt="Blue Puzzle Icon"
-            className="absolute left-[63.13%] top-[53.33%] cursor-pointer"
+            className="absolute left-[63.5%] top-[53.33%] w-16 cursor-pointer"
             style={{
               animation: BLUE_ICON_ANIMATION,
               transformOrigin: "center center",
             }}
-            onClick={handleComingPuzzleClick}
-            onKeyDown={handleComingPuzzleKeyDown}
+            onClick={() => handleComingPuzzleClick("blue")}
+            onKeyDown={(e) => handleComingPuzzleKeyDown(e, "blue")}
             role="button"
             tabIndex={0}
           />
@@ -403,7 +417,7 @@ export default function ComingSoon() {
         </div>
       </div>
 
-      {showOverlay && (
+      {showOverlay && overlayWhich && (
         <div
           className="absolute inset-0 z-300 flex items-center justify-center bg-black/45"
           onClick={handleOverlayClose}
@@ -415,7 +429,13 @@ export default function ComingSoon() {
             className="w-full max-w-136 px-6"
             onClick={(event) => event.stopPropagation()}
           >
-            <PuzzleBuilder onClose={handleOverlayClose} />
+            {overlayWhich === "red" && <PuzzleBuilderRed onClose={handleOverlayClose} />}
+            {overlayWhich === "yellow" && (
+              <PuzzleBuilderGreen onClose={handleOverlayClose} />
+            )}
+            {overlayWhich === "blue" && (
+              <PuzzleBuilderBlue onClose={handleOverlayClose} />
+            )}
           </div>
         </div>
       )}
