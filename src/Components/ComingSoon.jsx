@@ -183,7 +183,7 @@ export default function ComingSoon() {
               </span>
               MING
             </h1>
-            <p className="absolute top-110 left-10 font-albert-sans text-[12.5px] italic text-left py-4">
+            <p className="absolute top-110 left-10 font-albert-sans text-[16px] italic text-left py-4">
               - A new design experience is on its way
             </p>
 
@@ -236,8 +236,8 @@ export default function ComingSoon() {
               N
             </h1>
 
-            <p className=" absolute mt-4 font-albert-sans top-136 left-42 text-[12.5px] italic text-left">
-              Click to solve our creative puzzle and <br /> piece together what
+            <p className=" absolute mt-4 font-albert-sans top-136 left-42 text-[16px] italic text-left">
+              Click to solve our creative <br /> puzzle  and  piece together <br /> what
               is coming soon.
             </p>
           </div>

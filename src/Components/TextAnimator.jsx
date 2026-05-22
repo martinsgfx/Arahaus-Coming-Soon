@@ -377,7 +377,7 @@ export default function TextAnimator({ onComplete }) {
             }}
           >
             <span
-              className="text-lg sm:text-xl lg:text-2xl"
+              className="text-[14px] sm:text-[14px] lg:text-2xl albert-sans-bold"
               style={{
                 color: "#b83010",
                 letterSpacing: " ",

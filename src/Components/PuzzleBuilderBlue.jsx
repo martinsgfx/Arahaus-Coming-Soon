@@ -418,7 +418,7 @@ export default function PuzzleBuilderBlue({ onClose = () => {} }) {
 
         {/* Hint bar */}
         <div className="px-4 py-1.5 bg-slate-50 border-t border-slate-100">
-          <p className="text-xs text-gray text-center leading-tight">
+          <p className="text-xs text-gray albert-sans text-center leading-tight">
             {selected !== null
               ? "✦ Tap a slot on the board to place the piece"
               : "Tap any piece below to select it"}
@@ -553,19 +553,19 @@ export default function PuzzleBuilderBlue({ onClose = () => {} }) {
             onClick={(e) => e.stopPropagation()}
           >
             <img src={puzzleImage} alt="Puzzle" />
-            <h2 className="text-xl sm:text-2xl font-bold text-black">
+            <h2 className="text-xl sm:text-2xl font-bold albert-sans-bold text-black">
               Nice Work!
             </h2>
-            <p className="text-gray-600 text-sm">
+            <p className="text-gray-600 albert-sans text-sm">
               You’ve unlocked what’s coming soon. We’re crafting something bold
               for you.
             </p>
             <button
               onClick={handleReset}
-              className="mt-1 w-full sm:w-auto bg-black active:bg-black text-white px-8 py-3 rounded-full text-sm font-medium transition-colors"
+              className="mt-1 w-full sm:w-auto bg-black active:bg-black albert-sans-bold text-white px-8 py-3 rounded-full text-sm font-medium transition-colors"
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
-              Play Again
+              Okay
             </button>
           </div>
         </div>

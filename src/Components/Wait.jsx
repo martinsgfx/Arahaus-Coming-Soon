@@ -52,7 +52,7 @@ export const Wait = ({ onComplete }) => {
           />
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold py-2 sm:py-3">Waitttttt!</h1>
-        <p className="mx-auto max-w-[30ch] sm:text-xl lg:text-2xl leading-snug font-normal">
+        <p className="mx-auto max-w-[30ch] sm:text-xl lg:text-2xl albert-sans leading-snug font-normal">
           Are we ready to show the world yet?
         </p>
       </div>
