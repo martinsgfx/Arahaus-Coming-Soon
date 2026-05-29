@@ -100,7 +100,7 @@ export default function ComingSoon() {
 
   if (isMobile) {
     return (
-      <div className="absolute inset-0 overflow-hidden font-medium">
+      <div className="absolute  inset-0 overflow-hidden font-medium">
         <style>{`
         @keyframes puzzleSpinPulse {
           0% { transform: rotate(0deg) scale(0.86); }
@@ -161,7 +161,7 @@ export default function ComingSoon() {
               <img
               src={yellowPuzzleIcon}
               alt="Yellow Puzzle Icon"
-                className="absolute left-28.5  top-101 w-6 cursor-pointer"
+                className="absolute left-28.5  top-99 w-6 cursor-pointer"
               style={{
                 animation: YELLOW_ICON_ANIMATION,
                 transformOrigin: "center center",
@@ -195,7 +195,7 @@ export default function ComingSoon() {
             <img
               src={redPuzzleIcon}
               alt="Red Puzzle Icon"
-              className="absolute left-60 top-127.5 w-6 cursor-pointer"
+              className="absolute left-60 top-126 w-6 cursor-pointer"
               style={{
                 animation: RED_ICON_ANIMATION,
                 transformOrigin: "center center",
@@ -208,7 +208,7 @@ export default function ComingSoon() {
             <img
               src={bluePuzzleIcon}
               alt="Blue Puzzle Icon"
-              className="absolute left-76.25 top-127.5 w-6 cursor-pointer"
+              className="absolute left-76.25 top-126 w-6 cursor-pointer"
               style={{
                 animation: BLUE_ICON_ANIMATION,
                 transformOrigin: "center center",
