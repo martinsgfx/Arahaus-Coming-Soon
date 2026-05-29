@@ -6,6 +6,7 @@ import waitMobileBg from "./assets/wait-mobile-bg.png";
 import waitBg from "./assets/wait-bg.png";
 import TextAnimator from "./Components/TextAnimator";
 import { Wait } from "./Components/Wait";
+import {Helmet} from "react-helmet-async";
 import ComingSoon from "./Components/ComingSoon";
 
 function App() {
@@ -14,6 +15,13 @@ function App() {
 
   return (
     <>
+      <Helmet>
+        <title>Arahaus</title>
+        <meta property="og:title" content="Arahaus" />
+        <meta property="og:description" content="Your site description here" />
+        <meta property="og:image" content="https://arahaus.com/og-image.jpg" />
+        <meta property="og:url" content="https://arahaus.com" />
+      </Helmet>
       <style>{`
         html, body { margin: 0; padding: 0; overflow: hidden; }
         @media (max-width: 1023px) {
