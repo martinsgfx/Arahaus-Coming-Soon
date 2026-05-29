@@ -6,7 +6,6 @@ import PuzzleBuilderRed from "./PuzzleBuilderRed";
 import PuzzleBuilderBlue from "./PuzzleBuilderBlue";
 import PuzzleBuilderGreen from "./PuzzleBuilderGreen";
 
-
 const MOBILE_BREAKPOINT = 768;
 const DESIGN_WIDTH = 1920;
 const DESIGN_HEIGHT = 1080;
@@ -68,8 +67,7 @@ export default function ComingSoon() {
       setDesktopScale(Math.min(scaleX, scaleY));
 
       const mobileScaleX = viewportW / MOBILE_DESIGN_WIDTH;
-      const mobileScaleY = viewportH / MOBILE_DESIGN_HEIGHT;
-      setMobileScale(Math.min(mobileScaleX, mobileScaleY));
+      setMobileScale(mobileScaleX);
     };
 
     updateViewport();
@@ -152,25 +150,24 @@ export default function ComingSoon() {
         >
           <div className="relative flex h-full w-full flex-col justify-center">
             <div
-              className={`absolute h-111 w-2 left-57.75 top-0 bg-black origin-top transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
+              className={`absolute h-109 w-2 left-57.75 top-0 bg-black origin-top transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
             />
 
-            
             <h1 className="text-[80px] leading-[0.84] text-left ml-8">
               C
               <img
-              src={yellowPuzzleIcon}
-              alt="Yellow Puzzle Icon"
+                src={yellowPuzzleIcon}
+                alt="Yellow Puzzle Icon"
                 className="absolute left-28.5  top-99 w-6 cursor-pointer"
-              style={{
-                animation: YELLOW_ICON_ANIMATION,
-                transformOrigin: "center center",
-              }}
+                style={{
+                  animation: YELLOW_ICON_ANIMATION,
+                  transformOrigin: "center center",
+                }}
                 onClick={() => handleComingPuzzleClick("yellow")}
                 onKeyDown={(e) => handleComingPuzzleKeyDown(e, "yellow")}
                 role="button"
                 tabIndex={0}
-            />
+              />
               <span
                 className="text-transparent [-webkit-text-stroke:2px_#ef4444] cursor-pointer"
                 style={{ animation: RED_STROKE_TO_SOLID_ANIMATION }}
@@ -188,7 +185,7 @@ export default function ComingSoon() {
             </p>
 
             <div
-              className={`absolute my-6 h-118 w-2 right-6.5 top-117.75 origin-bottom bg-[#9C2521] transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
+              className={`absolute my-6 h-118 w-2 right-6.5 top-115.75 origin-bottom bg-[#9C2521] transition-transform duration-700 ease-out ${growMobileLine ? "scale-y-100" : "scale-y-0"}`}
             />
 
             {/* //Puzzle Icons for Soon */}
@@ -237,8 +234,8 @@ export default function ComingSoon() {
             </h1>
 
             <p className=" absolute mt-4 font-albert-sans top-136 left-42 text-[16px] italic text-left">
-              Click to solve our creative <br /> puzzle  and  piece together <br /> what
-              is coming soon.
+              Click to solve our creative <br /> puzzle and piece together{" "}
+              <br /> what is coming soon.
             </p>
           </div>
         </div>
@@ -329,9 +326,7 @@ export default function ComingSoon() {
           />
 
           <h1 className="text-[180px] leading-31 w-[60%] ">
-            C
-            
-            {/* // Puzzle Icon for coming */}
+            C{/* // Puzzle Icon for coming */}
             <img
               src={yellowPuzzleIcon}
               alt="Yellow Puzzle Icon"
@@ -353,7 +348,6 @@ export default function ComingSoon() {
               role="button"
               tabIndex={0}
             >
-                
               O
             </span>
             MING
@@ -429,7 +423,9 @@ export default function ComingSoon() {
             className="w-full max-w-136 px-6"
             onClick={(event) => event.stopPropagation()}
           >
-            {overlayWhich === "red" && <PuzzleBuilderRed onClose={handleOverlayClose} />}
+            {overlayWhich === "red" && (
+              <PuzzleBuilderRed onClose={handleOverlayClose} />
+            )}
             {overlayWhich === "yellow" && (
               <PuzzleBuilderGreen onClose={handleOverlayClose} />
             )}
