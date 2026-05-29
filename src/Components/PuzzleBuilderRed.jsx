@@ -561,7 +561,10 @@ export default function PuzzleBuilderRed({ onClose = () => {} }) {
               for you.
             </p>
             <button
-              onClick={handleReset}
+              onClick={() => {
+                handleReset();
+                onClose();
+              }}
               className="mt-1 w-full sm:w-auto bg-black active:bg-black albert-sans-bold text-white px-8 py-3 rounded-full text-sm font-medium transition-colors"
               style={{ WebkitTapHighlightColor: "transparent" }}
             >
