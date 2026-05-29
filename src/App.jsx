@@ -26,7 +26,7 @@ function App() {
         }
       `}</style>
       <div
-        className={`relative overflow-hidden min-h-screen ${showComingSoon ? "bg-white" : ""}`}
+        className={`relative mx-0 overflow-hidden min-h-screen ${showComingSoon ? "bg-white" : ""}`}
       >
         <div
           className="base-bg absolute inset-0 bg-fixed bg-no-repeat bg-cover transition-opacity duration-700"
@@ -37,7 +37,7 @@ function App() {
           style={{ opacity: showWait && !showComingSoon ? 1 : 0 }}
         />
 
-        <div className="relative z-50 px-6 py-18 lg:px-24">
+        <div className="relative z-50 px-6 py-9 lg:py-18 lg:px-24">
           <NavBar />
         </div>
         {!showWait && <TextAnimator onComplete={() => setShowWait(true)} />}

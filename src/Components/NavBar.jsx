@@ -9,7 +9,7 @@ export const NavBar = () => {
         <img
           src={arahausLogo}
           alt="Arahaus Logo"
-          className="h-10 w-auto pointer-events-auto transition-transform duration-200 hover:scale-105 "
+          className="h-6 lg:h-10 w-auto pointer-events-auto transition-transform duration-200 hover:scale-105 "
         />
       </a>
 
@@ -17,7 +17,7 @@ export const NavBar = () => {
         <img
           src={instagramIcon}
           alt="Instagram Logo"
-          className="h-8 w-8 pointer-events-auto transition-transform duration-200 hover:scale-110 "
+          className="h-6 lg:h-8 w-8 pointer-events-auto transition-transform duration-200 hover:scale-110 "
         />
       </a>
     </div>
