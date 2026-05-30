@@ -275,7 +275,6 @@ export default function PuzzleBuilderGreen({ onClose = () => {} }) {
 
   const boardW = cellW * COLS;
   const boardH = cellH * ROWS;
-  const placedCount = board.filter((x) => x !== null).length;
   const tabOverflow = cellH * 0.28;
 
   return (
@@ -292,20 +291,7 @@ export default function PuzzleBuilderGreen({ onClose = () => {} }) {
             <h1 className="text-sm sm:text-base font-sans font-bold text-slate-800 tracking-tight">
               Puzzle Builder
             </h1>
-            <div className="flex items-center gap-2 mt-1">
-              <div
-                className="h-1.5 rounded-full bg-slate-100 overflow-hidden"
-                style={{ width: 72 }}
-              >
-                <div
-                  className="h-full bg-[#B1F02D] rounded-full transition-all duration-500"
-                  style={{ width: `${(placedCount / TOTAL) * 100}%` }}
-                />
-              </div>
-              <span className="text-xs text-gray">
-                {placedCount} / {TOTAL}
-              </span>
-            </div>
+            {/* Progress bar removed */}
           </div>
           <div className="flex gap-2 items-center">
             <button
