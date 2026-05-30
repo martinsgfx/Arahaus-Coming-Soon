@@ -18,7 +18,7 @@ function App() {
       <Helmet>
         <title>Arahaus</title>
         <meta property="og:title" content="Arahaus" />
-        <meta property="og:description" content="Your site description here" />
+        <meta property="og:description" content="A Space for Creative Form, Body of expression" />
         <meta property="og:image" content="https://arahaus.com/og-image.jpg" />
         <meta property="og:url" content="https://arahaus.com" />
       </Helmet>
